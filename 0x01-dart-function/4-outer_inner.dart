@@ -1,6 +1,8 @@
 void outer(String name, String id) {
   String inner() {
-    return "Hello Agent B.$name your id is $id";
+  List<String> nameParts = name.split(' ');
+
+    return "Hello Agent B.${nameParts[1]} your id is $id";
   }
   
   print(inner());
