@@ -1,13 +1,11 @@
 void main(List<String> args) {
-   int nb = int.parse(args[0]);
-    String result = '';
-    if (nb ==0){
-        result = 'zero';
-    } if( nb > 0){
-        result = 'positive';
-    }else{
-        result = 'negative';
-    }
-    print('$nb is $result');
-}
+  int number = int.parse(args[0]);
 
+  if (number > 0) {
+    print('$number is positive');
+  } else if (number == 0) {
+    print('$number is zero');
+  } else {
+    print('$number is negative');
+  }
+}
