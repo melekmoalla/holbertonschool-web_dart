@@ -3,8 +3,7 @@ String longestUniqueSubstring(String str) {
     return "";
     }
     List<String> list = [];
-    String  return_str = '';
-    int maxLength = 0;
+
     for (int i = 0; i < str.length; i++) {
         if (i == str.indexOf(str[i])){
             list.add(str[i]);
