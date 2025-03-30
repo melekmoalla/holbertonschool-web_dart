@@ -1,4 +1,3 @@
-
 void main(List<String> args) {
    int nb = int.parse(args[0]);
     String result = '';
