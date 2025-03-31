@@ -5,7 +5,6 @@ class User extends Password {
   String name;
   int age;
   double height;
-  String? user_password;
 
   User({
     required this.id,
@@ -13,14 +12,16 @@ class User extends Password {
     required this.age,
     required this.height,
     String? user_password,
-  }) : super(password: user_password ?? "") {
-    this.user_password = user_password;
+  }) : super(password: user_password) {
+    isValid();
   }
 
-  @override
-  String toString() {
-    bool passwordValid = isValid();
-    return "User(id : $id, name: $name, age: $age, height: $height, Password: $passwordValid)";
+
+  String? get user_password => password;
+
+  set user_password(String? value) {
+    password = value;
+    isValid();
   }
 
   Map<String, dynamic> toJson() {
@@ -28,18 +29,21 @@ class User extends Password {
       'id': id,
       'name': name,
       'age': age,
-      'height': height,
-      'user_password': user_password,
+      'height': height
     };
   }
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-      age: json['age'],
-      height: json['height'],
-      user_password: json['user_password'],
-    );
+  static User fromJson(Map<dynamic, dynamic> userJson) {
+    return new User(
+      id: userJson['id'],
+      name: userJson['name'],
+      age: userJson['age'],
+      height: userJson['height'],
+      user_password: userJson['user_password']);
+  }
+
+  @override
+  String toString() {
+    return 'User(id : $id ,name: $name, age: $age, height: $height, Password: ${isValid()})';
   }
 }

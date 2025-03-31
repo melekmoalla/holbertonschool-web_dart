@@ -1,25 +1,27 @@
 class Password {
-  String _password = "";
+  String? _password;
 
-  Password({required String password}) : _password = password;
+  Password({String? password}) : _password = password;
 
   bool isValid() {
-    return _password.length >= 8 &&
-        RegExp(r'[A-Z]').hasMatch(_password) &&
-        RegExp(r'[a-z]').hasMatch(_password) &&
-        RegExp(r'\d').hasMatch(_password);
+    if (_password == null) return false;
+    if (_password!.length < 8 || _password!.length > 16) return false;
+    if (!_password!.contains(new RegExp(r'[A-Z]'))) return false;
+    if (!_password!.contains(new RegExp(r'[a-z]'))) return false;
+    if (!_password!.contains(new RegExp(r'[0-9]'))) return false;
+    return true;
   }
 
   @override
   String toString() {
-    return "Your Password is: $_password";
+    return 'Your Password is: ${_password ?? "not set"}';
   }
 
-  set password(String newPassword) {
-    _password = newPassword;
+  String? get password {
+    return _password ?? "not set";
   }
 
-  String get password {
-    return _password;
+  void set password(String? input) {
+    this._password = input;
   }
 }
