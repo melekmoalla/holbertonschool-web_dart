@@ -1,9 +1,23 @@
-Future<String> fetchUserData() => Future.delayed(
-      const Duration(seconds: 2),
-      () =>
-          '{"id" : "7ee9a243-01ca-47c9-aa14-0149789764c3", "username" : "admin"}',
-    );
+import '3-util.dart';
+import 'dart:convert';
 
-Future<bool> checkCredentials() =>
-    Future.delayed(const Duration(seconds: 2), () => true);
-    
+Future<String> greetUser() async {
+    try{
+        String admin_string= await fetchUserData();
+        Map<String, dynamic> admin = await jsonDecode(admin_string);
+        return 'Hello ${admin['username']}';
+    }catch(e){
+        return 'error caught: $e';
+    }
+}
+
+Future<String> loginUser() async{
+    if (await checkCredentials()) {
+        String userData = await greetUser();
+        print('There is a user: true');
+        return userData;
+    } else {
+        print('There is a user: false');
+        return 'Wrong credentials';
+    }
+}
