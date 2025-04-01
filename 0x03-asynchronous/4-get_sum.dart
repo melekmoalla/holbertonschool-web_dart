@@ -12,9 +12,15 @@ try{
     }
     double total = 0.0;
     for (String order in ordersList) {
-        String price = await fetchProductPrice(order);
-        double prices = (json.decode(price) as num).toDouble(); 
-        total += prices;
+      String price = await fetchProductPrice(order);
+      dynamic decodedPrice = json.decode(price);
+
+      if (decodedPrice == null) {
+        return -1;
+      }
+
+      double prices = (decodedPrice as num).toDouble();
+      total += prices;
     }
     return total;
   } catch (e) {
