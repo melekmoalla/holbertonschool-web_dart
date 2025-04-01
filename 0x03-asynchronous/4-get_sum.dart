@@ -2,21 +2,24 @@ import 'dart:convert';
 import '4-util.dart';
 
 Future<double> calculateTotal() async {
-try{
+  try {
     String data = await fetchUserData();
     String id = json.decode(data)["id"];
+
     String orders = await fetchUserOrders(id);
-    List<dynamic>? ordersList = json.decode(orders);
+    List<dynamic>? ordersList = json.decode(orders); // Handle null case
+
     if (ordersList == null) {
-      return -1;
+      return -1; // Return -1 if user has no orders
     }
+
     double total = 0.0;
     for (String order in ordersList) {
       String price = await fetchProductPrice(order);
       dynamic decodedPrice = json.decode(price);
 
       if (decodedPrice == null) {
-        return -1;
+        return -1; // Return -1 if product price is missing
       }
 
       double prices = (decodedPrice as num).toDouble();
@@ -24,7 +27,6 @@ try{
     }
     return total;
   } catch (e) {
-
     return -1;
   }
 }
