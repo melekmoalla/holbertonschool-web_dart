@@ -16,7 +16,7 @@ try{
     }
     return total;
   } catch (e) {
-    print("Error: $e");
+
     return -1;
   }
 }
