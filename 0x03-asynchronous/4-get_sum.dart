@@ -6,8 +6,10 @@ try{
     String data = await fetchUserData();
     String id = json.decode(data)["id"];
     String orders = await fetchUserOrders(id);
-    List ordersList = json.decode(orders);
-
+    List<dynamic>? ordersList = json.decode(orders);
+    if (ordersList == null) {
+      return -1;
+    }
     double total = 0.0;
     for (String order in ordersList) {
         String price = await fetchProductPrice(order);
