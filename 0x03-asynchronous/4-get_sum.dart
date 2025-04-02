@@ -3,30 +3,25 @@ import '4-util.dart';
 
 Future<double> calculateTotal() async {
   try {
-    String data = await fetchUserData();
-    String id = json.decode(data)["id"];
+    String userData = await fetchUserData();
+    Map<String, dynamic> userJson = json.decode(userData);
+    String userId = userJson['id'];
 
-    String orders = await fetchUserOrders(id);
-    List<dynamic>? ordersList = json.decode(orders); // Handle null case
-
-    if (ordersList == null) {
-      return -1; // Return -1 if user has no orders
-    }
+    String ordersData = await fetchUserOrders(userId);
+    List<dynamic> ordersList = json.decode(ordersData) as List<dynamic>;
 
     double total = 0.0;
-    for (String order in ordersList) {
-      String price = await fetchProductPrice(order);
-      dynamic decodedPrice = json.decode(price);
-
-      if (decodedPrice == null) {
-        return -1; // Return -1 if product price is missing
+    for (var product in ordersList) {
+      String priceData = await fetchProductPrice(product);
+      dynamic priceValue = json.decode(priceData);
+      if (priceValue == null) {
+        throw Exception('Price not found for product: $product');
       }
-
-      double prices = (decodedPrice as num).toDouble();
-      total += prices;
+      total += (priceValue as num).toDouble();
     }
+
     return total;
   } catch (e) {
-    return -1;
+    return -1.0;
   }
 }
