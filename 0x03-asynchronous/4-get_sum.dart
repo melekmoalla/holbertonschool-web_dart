@@ -13,7 +13,7 @@ calculateTotal() async {
       return -1; // Return -1 if user has no orders
     }
 
-    double total = 0.0;
+    double total = 0;
     for (String order in ordersList) {
       String price = await fetchProductPrice(order);
       dynamic decodedPrice = json.decode(price);
@@ -27,7 +27,7 @@ calculateTotal() async {
     }
     return total;
     } catch (err) {
-        print('error caught: $err');
+
         return -1;
     }
 }
